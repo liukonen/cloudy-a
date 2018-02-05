@@ -57,9 +57,9 @@ def CheckWeather():
 
  if WeatherNeedsUpdating():
   NextUpdate = datetime.datetime.now() + datetime.timedelta(minutes = UpdateTimeInMinutes)
-  myweather = json.load(urllib2.urlopen('http://api.wunderground.com/api/' + wunder_api + '/forecast/q/' + location + '.json'))
-  myweather_sum = myweather['forecast']['simpleforecast']['forecastday']
   try:
+   myweather = json.load(urllib2.urlopen('http://api.wunderground.com/api/' + wunder_api + '/forecast/q/' + location + '.json'))
+   myweather_sum = myweather['forecast']['simpleforecast']['forecastday']
    if int(time.strftime("%H")) < int(switch_time):
 	ampm = 1
    else:
@@ -70,7 +70,7 @@ def CheckWeather():
      orig_conditions = period['icon']
     condition = conditions[orig_conditions]
   except:
-   NextUpdate = datetime.datetime.now()
+   NextUpdate = datetime.datetime.now() + datetime.timedelta(seconds = 30)
    condition = "Error"
 
 
