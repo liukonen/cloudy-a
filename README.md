@@ -58,11 +58,12 @@ Ok, so what do you need to do? This:
 	    @reboot /usr/bin/pigpiod  
 	    @reboot /home/pi/launcher.sh    
 + Close the file with CTRL-X and restart with “sudo reboot”. Now the LED strips should light up according to the weather forecast already. We are finally ready to build the lamp!  
-+ As I said before I had to experiment around a bit to get a good yellow. I have settled for a ratio of red to green of 1:5. This might not get you the best results. If you want to change it, navigate to the function sun() and change the settings for pin 24 and 13.  
-To make the lamp there are actually quite a lot of good tutorials, I just chose this one because it resembles most closely my own process and uses the same kind of [container](
-https://www.youtube.com/watch?v=y5bo0-kV5Jo)  
-Just some notes: When you finished the lamp, put the Raspberry Pi, the breadboard or perfboard and the LED-strips all in and have everything attached to the multiple socket strip. This should be the only cable that comes out of the lamp. As I said before, I used a (more or less) rectangular clear 5 liter bottle. I cut three sides of it open just where it reaches the biggest diameter under the opening. On the side opposite to the attached side I also made a hole for the power cord. Then I made another hole in the exact middle of the bottom (a soldering iron can help here!) and put the fishing line through that and the hole at the top of the bottle. Then I put it on a hook, put the power cord in the hook and attached the fishing line to it too. Since the fishing line is a bit shorter the lamp is automatically closed the the tension of the weight.  
+
+Just some notes: When you finished the lamp, put the Raspberry Pi, the breadboard or perfboard and the LED-strips all in and have everything attached to the socket strip adapter.  I used a rectangular 1 gallon watter bottle. I cut the bottom open for easy access, and kept the cutout as a lid I could tape shut. I also added some air holes on the top for ventalation and kept the opening of the jug open for even more air flow. On the bottom I cut a hole perfect for the lamp to hold the jug, and since the lamp had a threaded piece to it, I was able to secure it down.
 
 The designer bought a cheap timeclock because they didn’t want the lamp to be switched on all the time, but obviusly this is up to you. The program is set up so that it will finish the cycle of animation about every hour (and can be adjusted in code). It will then check for the forecast again and start the according animation. 
 
 Anyway, now everything should be finished and you have a working weather forecast cloud lamp. I want to stress again that I can not be held responsible for any damages of injuries that might occur in the making or running of this project. Of course I can also not guarantee that it will work for you even if you follow all the steps correctly. If you have suggestions I would be happy to hear them. I will try to answer questions but don’t count on it. Now I would be very happy to see your creations!  
+
+
+Photos of my project can be found here! https://photos.app.goo.gl/HpOL2VZhOtbpGhuh1
