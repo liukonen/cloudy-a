@@ -1,7 +1,7 @@
 # cloudy-Pie (a remake of DJAkbar's cloudy-a project)
 A  script for light animations for two LED strips according to the weather forecast. For an example see [Youtube](https://www.youtube.com/watch?v=DNXssI4LuMc)  
 
-![](https://photos.google.com/share/AF1QipOMoAnTjsl1vHkdMKKKCN1xW6iSxDiTr3LDCouiXe-a7tEMcBhY2XJaACV6o3RhJQ/photo/AF1QipPjSYADJJrY2eRtpPDtMzhWCZ6ECu6eLYh4c0uI?key=bWxPOWdLMmY5VWh6cXlIcmNHS25wYm9IOUFFTGN3 | width=100)
+![](https://lh3.googleusercontent.com/OWZv2fEOazNtOKzn04vIXL1WkjLKEBS2XjN8mAmALI3k3eyp2ftHteBgxuCBxdeUuTZcjzoTVvUROQToHgtBTr1X2pJ8PGiK-xiI1HSHDtBNMo6fXunyQ7nH6e0Ys-16SorFYjvX7jpDHuD8UuIjoVGQZk261v0onbipPugYrq-x7VZ7ay5YZPJAYq9jODe376Kq8IojVbeS4ZZT1dJwElg_BWsMrHbzh2VnIoZ5UHZ1Oye5_sQvuAKnR21LrvYnW-XRMIKu_bpW9Us9iV3FsfCOpthBFlUnuWf7-59jd-LRr-t_ajMmEnAIhjaIq6_zPyAVa1YSsnSjYcVxFlzjYd7HIJ1YKGE3EvvzPx6BT2NTs3JIllOzp6rIiVAhAwnUC_aE7cdRHlR6we18gC4D096QcLvOSn30XIX6bMm2p-_eL8SaEUAntnPyrWB_w19irEm0ayfgI5bPT7LQoFTIxUntLxeo8DytMpm56dgS1rr2Uwf8FQeaHhrDKOZefsvOdK_RwvDFbBFFD2YYu1VMbejPlUhEWtKMRr79-jZih597zZvV-QKJo6y-ahQGNWiOFigeCNt4buLBmW7eXhuNXVl_73y6S8GUpNEeHnS6rFy9DF9GePVDfIzbyWJcmWL96Pi0o2isNgxn-QuSgj2no6SrwUJLSov64w=w869-h989-no | width=100)
 
 Instructions for use: 
 Here is a short write-up of some instructions to make your own DIY weather forecast cloud lamp.  
