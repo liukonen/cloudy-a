@@ -21,6 +21,7 @@ For the lamp itself I recommend the following:
 + A 5 liter (or 1 gallon) plastic bottle (or a similarly big container of see-through material. Some people are using these IKEA paper lanterns but I do not recommend them since they could theoretically burn)  
 + Cotton batting. For the 5 liter bottle I needed about 100g, i have SO much left over now! I have used [this](https://www.idee-shop.com/shop/de/dieprodukte/Basteln/Bastelmaterial/FuellmaterialFell/Fuellwatteweiss250g.html)  
 + A "cool" glue gun or similar to attach the batting to the bottle  
+
 If Making a true "Lamp" like I did
 + A light socket to power adapter
 
