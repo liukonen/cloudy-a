@@ -66,4 +66,4 @@ The designer bought a cheap timeclock because they didn’t want the lamp to be 
 Anyway, now everything should be finished and you have a working weather forecast cloud lamp. I want to stress again that I can not be held responsible for any damages of injuries that might occur in the making or running of this project. Of course I can also not guarantee that it will work for you even if you follow all the steps correctly. If you have suggestions I would be happy to hear them. I will try to answer questions but don’t count on it. Now I would be very happy to see your creations!  
 
 
-Photos of my project can be found here! https://photos.app.goo.gl/HpOL2VZhOtbpGhuh1
+Photos of my project can be found [here!](https://photos.app.goo.gl/HpOL2VZhOtbpGhuh1)
