@@ -1,6 +1,8 @@
 # cloudy-Pie (a remake of DJAkbar's cloudy-a project)
 A  script for light animations for two LED strips according to the weather forecast. For an example see [Youtube](https://www.youtube.com/watch?v=DNXssI4LuMc)  
 
+![](https://github.com/liukonen/cloudy-pie/blob/master/20180127_183138.jpg | width=100)
+
 Instructions for use: 
 Here is a short write-up of some instructions to make your own DIY weather forecast cloud lamp.  
 The creator of this project built his using this with a Raspberry Pi 3. I am currently using a Rasberry Pi B.Some things should be set-up already:  
