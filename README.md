@@ -2,7 +2,6 @@
 A  script for light animations for two LED strips according to the weather forecast. For an example see [Youtube](https://www.youtube.com/watch?v=DNXssI4LuMc)  
 
 <img src="https://github.com/liukonen/cloudy-pie/blob/master/20180127_183138.jpg" width="300" height="400" />
-![Cloud]())
 
 ## Instructions for use: 
 Here is a short write-up of some instructions to make your own DIY weather forecast cloud lamp.  
