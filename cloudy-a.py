@@ -7,32 +7,36 @@ import time
 import datetime
 import pigpio
 import random
-
+​
 #insert the WeatherUnderground API-key here:
 wunder_api = ""
-
+​
 #insert the location for the forecast here. For example "Germany/Berlin"
 location = ""
-
+​
 #this decides when it is time to display the forecast for the next day. If you want to show always the forecast for the day, set it to 24:
 switch_time = 24
-
+​
 #time we call the API
 UpdateTimeInMinutes = 60
-
+​
 #Valid Values are  1,2,3, and 4
-Brightness = 4
-
+Brightness =4 
+​
 #mapping the colors rather then hardcode
 r1 = 17
 g1 = 24
-b1 = 22
-r2 = 26 #Pi B 27
-g2 = 13 #Pi B 23
-b2 = 12 #Pi B 25
-
+b1 = 23
+r2 = 26
+g2 = 13
+b2 = 12
+​
+#turns on output to web interface, as well as local paths of where you will save files
+WebInterfaceActive = False
+WebInterfacePath = '/var/www/html/CloudyPie/'
+​
 #------------DO NOT EDIT BELOW THIS LINE UNLESS YOU ARE A PROGRAMMER ------------#
-
+​
 #region Global Variables
 NextUpdate = datetime.datetime.now() + datetime.timedelta(minutes = -1) #forces an update right away
 condition = ""
@@ -46,38 +50,46 @@ fadetime2=0
 maxBrightness = 63 * Brightness
 BrightnessMulitiplier = 5-Brightness
 pi = pigpio.pi()
-
-
+​
+​
 def WeatherNeedsUpdating():
   return NextUpdate < datetime.datetime.now()
-
+​
 def CheckWeather():
  global NextUpdate
  global condition
-
+​
  if WeatherNeedsUpdating():
   NextUpdate = datetime.datetime.now() + datetime.timedelta(minutes = UpdateTimeInMinutes)
   try:
    myweather = json.load(urllib2.urlopen('http://api.wunderground.com/api/' + wunder_api + '/forecast/q/' + location + '.json'))
    myweather_sum = myweather['forecast']['simpleforecast']['forecastday']
    if int(time.strftime("%H")) < int(switch_time):
-	ampm = 1
+    ampm = 1
    else:
-	ampm = 2
-
+    ampm = 2
+​
    for period in myweather_sum:
     if period['period'] == ampm:
      orig_conditions = period['icon']
     condition = conditions[orig_conditions]
-  except:
+​
+    if WebInterfaceActive:
+     writeOutput(json.dumps(myweather), WebInterfacePath + "output.json")
+     writeOutput(datetime.datetime.now().strftime("%c"), WebInterfacePath + "Lastupdated.log")
+     writeOutput("", WebInterfacePath + "error.log")
+  except Exception as e:
+   print(e)
    NextUpdate = datetime.datetime.now() + datetime.timedelta(seconds = 30)
    condition = "Error"
-
-
-
+   if WebInterfaceActive:
+      writeOutput(str(e), WebInterfacePath + "error.log")
+​
+​
+​
 #These are the different animations for the LED-strips:
 def rain():
-
+​
  blueishness1=maxBrightness
  blueishness2=0
  fadetimeblue=random.uniform(0.02,0.06) * BrightnessMulitiplier
@@ -85,7 +97,7 @@ def rain():
  pi.set_PWM_dutycycle(g1,0)
  pi.set_PWM_dutycycle(r2,0)
  pi.set_PWM_dutycycle(g2,0)
-
+​
  while blueishness1 !=0 and blueishness2 !=maxBrightness:
   blueishness1=blueishness1-1
   blueishness2=blueishness2+1
@@ -100,12 +112,12 @@ def rain():
   pi.set_PWM_dutycycle(b1,blueishness1)
   pi.set_PWM_dutycycle(b2,blueishness2)
  time.sleep(random.uniform(0.1,2))
-
+​
 def cloud():
  whiteness1=maxBrightness
  whiteness2=0
  fadetimewhite=random.uniform(0.02,0.04) * BrightnessMulitiplier
-
+​
  while whiteness1 != 0 and whiteness2 != maxBrightness:
   whiteness1=whiteness1-1
   whiteness2=whiteness2+1
@@ -128,14 +140,14 @@ def cloud():
   pi.set_PWM_dutycycle(g1,whiteness2)
   pi.set_PWM_dutycycle(b1,whiteness2)
  time.sleep(random.uniform(0.5,1))
-
+​
 def sun():
  yellowness1=maxBrightness
  yellowness2=0
  fadetimeyellow=random.uniform(0.05,0.06) * BrightnessMulitiplier
  pi.set_PWM_dutycycle(b1,0)
  pi.set_PWM_dutycycle(b2,0)
-
+​
  while yellowness1 != 0 and yellowness2 != maxBrightness:
   yellowness1=yellowness1-1
   yellowness2=yellowness2+1
@@ -154,8 +166,8 @@ def sun():
   pi.set_PWM_dutycycle(r1,yellowness2)
   pi.set_PWM_dutycycle(g1,(yellowness2/5))
  time.sleep(random.uniform(0.1,0.5))
-
-
+​
+​
 def snow():
  global bright
  global brightnew
@@ -164,7 +176,7 @@ def snow():
  global fadetime
  global fadetime2
  SnowBright = 61 * Brightness
-
+​
  start=random.randint(1,100)
  if start==1 and bright==0:
   brightnew= 50*Brightness #200
@@ -180,8 +192,8 @@ def snow():
    pass
  else:
   pass
-
-
+​
+​
  if brightnew > bright and bright < SnowBright:
   bright=bright+1
  elif brightnew == bright:
@@ -190,7 +202,7 @@ def snow():
   bright=bright-1
  else:
   pass
-
+​
  if brightnew2 > bright2 and bright2 < SnowBright:
   bright2=bright2+1
  elif brightnew2 == bright2:
@@ -207,7 +219,7 @@ def snow():
  pi.set_PWM_dutycycle(b2, bright2+55)
  pi.set_PWM_dutycycle(g2, bright2+55)
  time.sleep(fadetime2)
-
+​
 def flash():
  global bright
  global brightnew
@@ -216,7 +228,7 @@ def flash():
  global fadetime
  global fadetime2
  MinBrightness = 13*maxBrightness
-
+​
  start=random.randint(1,210)
  if start==1:
   brightnew=random.randint(MinBrightness,maxBrightness)
@@ -232,19 +244,19 @@ def flash():
    pass
  else:
   pass
-
+​
  if bright+brightnew<maxBrightness:
   bright=bright+brightnew
   brightnew=0
  else:
-  pass	
-
+  pass  
+​
  if bright2+brightnew2<maxBrightness:
   bright2=bright2+brightnew2
   brightnew2=0
  else:
-  pass	
- 
+  pass  
+
  pi.set_PWM_dutycycle(r1, bright)
  if bright>50:
   pi.set_PWM_dutycycle(b1, bright)
@@ -256,7 +268,7 @@ def flash():
   bright=bright-1
  else:
   pass
-
+​
  pi.set_PWM_dutycycle(r2, bright2)
  if bright2>50:
   pi.set_PWM_dutycycle(b2, bright2)
@@ -264,23 +276,28 @@ def flash():
   pi.set_PWM_dutycycle(b2, 50)
   pi.set_PWM_dutycycle(g2, bright2)
  time.sleep(fadetime2)
-
+​
  if bright2 !=0:
   bright2=bright2-1
  else:
   pass
-
+​
 def error_value():
  pi.set_PWM_dutycycle(r2, 100)
  time.sleep(1)
  pi.set_PWM_dutycycle(r1, 100)
  time.sleep(1)
-
+  
+def writeOutput(text, filename):
+ fh = open(filename,"w")
+ fh.write(text)
+ fh.close()
+​
 #this executes the main loop. E.g. it is looking for the conditions and decides for the animation that should be displayed:
 def main_loop():
  while 1:
   CheckWeather()
-
+​
   if  condition=="rainy":
    rain()
   elif condition=="cloudy":
@@ -293,12 +310,16 @@ def main_loop():
    flash()
   else:
    error_value()
-
-
+  time.sleep(0.2)
+​
 #Start
 if __name__ == '__main__':
  try:
   main_loop()
  except KeyboardInterrupt:
   print >> sys.stderr, '\nExiting by user request.\n'
+  sys.exit(0)
+ except Exception as e:
+  if WebInterfaceActive:
+   writeOutput(str(e), WebInterfacePath + "error.log")
   sys.exit(0)
