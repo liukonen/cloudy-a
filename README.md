@@ -13,7 +13,7 @@ The creator of this project built his using this with a Raspberry Pi 3. I am cur
 
 ## So what do you need:  
 + Raspberry Pi 
-+ a SD card for your version of the PI, with Rasbian lite (or rasbian if you want to remote desktop into it later)
++ a SD card for your version of the PI, with Raspbian lite (or Raspbian if you want to remote desktop into it later)
 	+ I personally recomend the Lite version... faster updates, and less things running
 + Internet connectivity to your pi. Wifi setup directions can be found [here](https://thepihut.com/blogs/raspberry-pi-tutorials/83502916-how-to-setup-wifi-on-raspbian-jessie-lite). Cat cable connections are automatic.
 + RGB LED-strip with 3 Pins for RGB and 1 Strip for power 
@@ -76,7 +76,7 @@ Anyway, now everything should be finished and you have a working weather forecas
 This device is a mini computer running in a plastic tub, and as such, runs into the same problems with any computer. Here are some maintenance and options to do after the fact
 + [Install WebMin](http://www.instructables.com/id/Adding-Webmin-to-manage-a-Raspberry-Pi/)
 	+ this gives you the abilty to maintain, update, run cron jobs, etc
-+ If running the full version of Rasbian, [Remote Desktop access](https://www.raspberrypi.org/magpi/vnc-raspberry-pi/)
++ If running the full version of Raspbian, [Remote Desktop access](https://www.raspberrypi.org/magpi/vnc-raspberry-pi/)
 + Run my steps on installing the CloudyPie landing page (coming soon), giving you access to any errors, and forcast information your pie pulled down (and in future verisons, control of your lamp)
 + Have your pi auto update. Directions [here](https://blog.dantup.com/2016/04/setting-up-automatic-updates-on-raspberry-pi-raspbian-jessie/)
 
