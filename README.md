@@ -93,12 +93,12 @@ Photos of my project can be found [here!](https://photos.app.goo.gl/HpOL2VZhOtbp
 Original concept and animations came from DJAkbar. I mearly took his code and refactored his code and animations into something a bit more effecent and standardized.
 
 # learnings
+## new
 * JSON parsing in Javascript
 * WeatherUnderground API
 * python
 * basic soldering
-
-# tech used (already knew)
+## Reinforced
 * linux (debian)
 * ssh
 * apache
