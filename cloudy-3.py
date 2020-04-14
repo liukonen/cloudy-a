@@ -56,276 +56,271 @@ pi = pigpio.pi()
 
 
 def WeatherNeedsUpdating():
-  return NextUpdate < datetime.datetime.now()
+    return NextUpdate < datetime.datetime.now()
 
 def CheckWeather():
- global NextUpdate
- global condition
+    global NextUpdate
+    global condition
 
- if WeatherNeedsUpdating():
-  NextUpdate = datetime.datetime.now() + datetime.timedelta(minutes = UpdateTimeInMinutes)
-  try:
-   myweather = json.load(urllib.request.urlopen('http://api.wunderground.com/api/' + wunder_api + '/forecast/q/' + location + '.json'))
-   myweather_sum = myweather['forecast']['simpleforecast']['forecastday']
-   if int(time.strftime("%H")) < int(switch_time):
-    ampm = 1
-   else:
-    ampm = 2
-   for period in myweather_sum:
-    if period['period'] == ampm:
-     orig_conditions = period['icon']
-    condition = conditions[orig_conditions]
-   if WebInterfaceActive:
-    writeOutput(json.dumps(myweather), WebInterfacePath + "output.json")
-    writeOutput(datetime.datetime.now().strftime("%c"), WebInterfacePath + "Lastupdated.log")
-    writeOutput("", WebInterfacePath + "error.log")
-  except Exception as e:
-   print(str(e))
-   NextUpdate = datetime.datetime.now() + datetime.timedelta(seconds = 30)
-   condition = "Error"
-   if WebInterfaceActive:
-      writeOutput(str(e), WebInterfacePath + "error.log")
+    if WeatherNeedsUpdating():
+        NextUpdate = datetime.datetime.now() + datetime.timedelta(minutes = UpdateTimeInMinutes)
+        try:
+            myweather = json.load(urllib.request.urlopen('http://api.wunderground.com/api/' + wunder_api + '/forecast/q/' + location + '.json'))
+            myweather_sum = myweather['forecast']['simpleforecast']['forecastday']
+            if int(time.strftime("%H")) < int(switch_time):
+                ampm = 1
+            else:
+                ampm = 2
+            for period in myweather_sum:
+                if period['period'] == ampm:
+                    orig_conditions = period['icon']
+                condition = conditions[orig_conditions]
+            if WebInterfaceActive:
+                writeOutput(json.dumps(myweather), WebInterfacePath + "output.json")
+                writeOutput(datetime.datetime.now().strftime("%c"), WebInterfacePath + "Lastupdated.log")
+                writeOutput("", WebInterfacePath + "error.log")
+        except Exception as e:
+            print(str(e))
+            NextUpdate = datetime.datetime.now() + datetime.timedelta(seconds = 30)
+            condition = "Error"
+            if WebInterfaceActive:
+                writeOutput(str(e), WebInterfacePath + "error.log")
 
 #These are the different animations for the LED-strips:
 def rain():
 
- blueishness1=maxBrightness
- blueishness2=0
- fadetimeblue=random.uniform(0.02,0.06) 
- SetPi(r1,0)
- SetPi(g1,0)
- SetPi(r2,0)
- SetPi(g2,0)
+    blueishness1=maxBrightness
+    blueishness2=0
+    fadetimeblue=random.uniform(0.02,0.06) 
+    SetPi(r1,0)
+    SetPi(g1,0)
+    SetPi(r2,0)
+    SetPi(g2,0)
 
- while blueishness1 !=0 and blueishness2 !=maxBrightness:
-  blueishness1=blueishness1-1
-  blueishness2=blueishness2+1
-  time.sleep(fadetimeblue)
-  SetPi(b1,blueishness1)
-  SetPi(b2,blueishness2)
- time.sleep(random.uniform(0.1,2))
- while blueishness1 !=maxBrightness and blueishness2 !=0:
-  blueishness1=blueishness1+1
-  blueishness2=blueishness2-1
-  time.sleep(fadetimeblue)
-  SetPi(b1,blueishness1)
-  SetPi(b2,blueishness2)
- time.sleep(random.uniform(0.1,2))
+    while blueishness1 !=0 and blueishness2 !=maxBrightness:
+        blueishness1=blueishness1-1
+        blueishness2=blueishness2+1
+        time.sleep(fadetimeblue)
+        SetPi(b1,blueishness1)
+        SetPi(b2,blueishness2)
+    time.sleep(random.uniform(0.1,2))
+    while blueishness1 !=maxBrightness and blueishness2 !=0:
+        blueishness1=blueishness1+1
+        blueishness2=blueishness2-1
+        time.sleep(fadetimeblue)
+        SetPi(b1,blueishness1)
+        SetPi(b2,blueishness2)
+    time.sleep(random.uniform(0.1,2))
 
 def cloud():
- whiteness1=maxBrightness
- whiteness2=0
- fadetimewhite=random.uniform(0.02,0.04) 
+    whiteness1=maxBrightness
+    whiteness2=0
+    fadetimewhite=random.uniform(0.02,0.04) 
 
- while whiteness1 != 0 and whiteness2 != maxBrightness:
-  whiteness1=whiteness1-1
-  whiteness2=whiteness2+1
-  time.sleep(fadetimewhite)
-  SetPi(g2,whiteness1)
-  SetPi(r2,whiteness1)
-  SetPi(b2,whiteness1)
-  SetPi(r1,whiteness2)
-  SetPi(g1,whiteness2)
-  SetPi(b1,whiteness2)
- time.sleep(random.uniform(0.5,1))
- while whiteness1 != maxBrightness and whiteness2 != 0:
-  whiteness1=whiteness1+1
-  whiteness2=whiteness2-1
-  time.sleep(fadetimewhite)
-  SetPi(g2,whiteness1)
-  SetPi(r2,whiteness1)
-  SetPi(b2,whiteness1)
-  SetPi(r1,whiteness2)
-  SetPi(g1,whiteness2)
-  SetPi(b1,whiteness2)
- time.sleep(random.uniform(0.5,1))
+    while whiteness1 != 0 and whiteness2 != maxBrightness:
+        whiteness1=whiteness1-1
+        whiteness2=whiteness2+1
+        time.sleep(fadetimewhite)
+        SetPi(g2,whiteness1)
+        SetPi(r2,whiteness1)
+        SetPi(b2,whiteness1)
+        SetPi(r1,whiteness2)
+        SetPi(g1,whiteness2)
+        SetPi(b1,whiteness2)
+    time.sleep(random.uniform(0.5,1))
+    while whiteness1 != maxBrightness and whiteness2 != 0:
+        whiteness1=whiteness1+1
+        whiteness2=whiteness2-1
+        time.sleep(fadetimewhite)
+        SetPi(g2,whiteness1)
+        SetPi(r2,whiteness1)
+        SetPi(b2,whiteness1)
+        SetPi(r1,whiteness2)
+        SetPi(g1,whiteness2)
+        SetPi(b1,whiteness2)
+    time.sleep(random.uniform(0.5,1))
 
 def sun():
- yellowness1=maxBrightness
- yellowness2=0
- fadetimeyellow=random.uniform(0.05,0.06) 
- SetPi(b1,0)
- SetPi(b2,0)
+    yellowness1=maxBrightness
+    yellowness2=0
+    fadetimeyellow=random.uniform(0.05,0.06) 
+    SetPi(b1,0)
+    SetPi(b2,0)
 
- while yellowness1 != 0 and yellowness2 != maxBrightness:
-  yellowness1=yellowness1-1
-  yellowness2=yellowness2+1
-  time.sleep(fadetimeyellow)
-  SetPi(g2,(yellowness1/5))
-  SetPi(r2,yellowness1)
-  SetPi(r1,yellowness2)
-  SetPi(g1,(yellowness2/5))
- time.sleep(random.uniform(0.1,0.5))
- while yellowness1 != maxBrightness and yellowness2 != 0:
-  yellowness1=yellowness1+1
-  yellowness2=yellowness2-1
-  time.sleep(fadetimeyellow)
-  SetPi(g2,(yellowness1/5))
-  SetPi(r2,yellowness1)
-  SetPi(r1,yellowness2)
-  SetPi(g1,(yellowness2/5))
- time.sleep(random.uniform(0.1,0.5))
+    while yellowness1 != 0 and yellowness2 != maxBrightness:
+        yellowness1=yellowness1-1
+        yellowness2=yellowness2+1
+        time.sleep(fadetimeyellow)
+        SetPi(g2,(yellowness1/5))
+        SetPi(r2,yellowness1)
+        SetPi(r1,yellowness2)
+        SetPi(g1,(yellowness2/5))
+    time.sleep(random.uniform(0.1,0.5))
+    while yellowness1 != maxBrightness and yellowness2 != 0:
+        yellowness1=yellowness1+1
+        yellowness2=yellowness2-1
+        time.sleep(fadetimeyellow)
+        SetPi(g2,(yellowness1/5))
+        SetPi(r2,yellowness1)
+        SetPi(r1,yellowness2)
+        SetPi(g1,(yellowness2/5))
+    time.sleep(random.uniform(0.1,0.5))
 
 
 def snow():
- global bright
- global brightnew
- global brightnew2
- global bright2
- global fadetime
- global fadetime2
- SnowBright = 61 * Brightness
- for flash_i in range(190):
-  start=random.randint(1,100)
-  if start==1 and bright==0:
-   brightnew= 50*Brightness #200
-   if bright==0:
-     fadetime=random.uniform(0.002,0.0025) 
-   else:
-    pass
-  elif start==2 and bright2==0:
-   brightnew2=50 * Brightness
-   if bright2==0:
-    fadetime2=random.uniform(0.002,0.0025) 
-   else:
-    pass
-  else:
-   pass
-  
-  if brightnew > bright and bright < SnowBright:
-   bright=bright+1
-  elif brightnew == bright:
-   brightnew=0
-  elif brightnew < bright and bright !=0:
-   bright=bright-1
-  else:
-   pass
-  
-  if brightnew2 > bright2 and bright2 < SnowBright:
-   bright2=bright2+1
-  elif brightnew2 == bright2:
-   brightnew2=0
-  elif brightnew2 < bright2 and bright2 !=0:
-   bright2=bright2-1
-  else:
-   pass
-  SetPi(r1, bright+55)
-  SetPi(b1, bright+55)
-  SetPi(g1, bright+55)
-  time.sleep(fadetime)
-  SetPi(r2, bright2+55)
-  SetPi(b2, bright2+55)
-  SetPi(g2, bright2+55)
-  time.sleep(fadetime2)
+    global bright
+    global brightnew
+    global brightnew2
+    global bright2
+    global fadetime
+    global fadetime2
+    SnowBright = 61 * Brightness
+    for flash_i in range(190):
+        start=random.randint(1,100)
+        if start==1 and bright==0:
+            brightnew= 50*Brightness #200
+            if bright==0:
+                fadetime=random.uniform(0.002,0.0025) 
+            else:
+                pass
+        elif start==2 and bright2==0:
+         brightnew2=50 * Brightness
+            if bright2==0:
+               fadetime2=random.uniform(0.002,0.0025) 
+            else:
+               pass
+        else:
+            pass
+        
+        if brightnew > bright and bright < SnowBright:
+            bright=bright+1
+        elif brightnew == bright:
+            brightnew=0
+        elif brightnew < bright and bright !=0:
+            bright=bright-1
+        else:
+            pass
+        
+        if brightnew2 > bright2 and bright2 < SnowBright:
+            bright2=bright2+1
+        elif brightnew2 == bright2:
+            brightnew2=0
+        elif brightnew2 < bright2 and bright2 !=0:
+            bright2=bright2-1
+        else:
+            pass
+        SetPi(r1, bright+55)
+        SetPi(b1, bright+55)
+        SetPi(g1, bright+55)
+        time.sleep(fadetime)
+        SetPi(r2, bright2+55)
+        SetPi(b2, bright2+55)
+        SetPi(g2, bright2+55)
+        time.sleep(fadetime2)
 
 def flash():
- global bright
- global brightnew
- global brightnew2
- global bright2
- global fadetime
- global fadetime2
- MinBrightness = 13*maxBrightness
- for flash_i in range(100):
-  start=random.randint(1,210)
-  if start==1:
-   brightnew=random.randint(MinBrightness,maxBrightness)
-   if bright==0:
-    fadetime=random.uniform(0.002,0.006) 
-   else:
-    pass
-  elif start==2:
-   brightnew2=random.randint(MinBrightness,maxBrightness)
-   if bright2==0:
-    fadetime2=random.uniform(0.002,0.006) 
-   else:
-    pass
-  else:
-   pass
-
-  if bright+brightnew<maxBrightness:
-   bright=bright+brightnew
-   brightnew=0
-  else:
-   pass  
-
-  if bright2+brightnew2<maxBrightness:
-   bright2=bright2+brightnew2
-   brightnew2=0
-  else:
-   pass  
-
-  SetPi(r1, bright)
-  if bright>50:
-   SetPi(b1, bright)
-  else:
-   SetPi(b1, 50)
-   SetPi(g1, bright)
-  time.sleep(fadetime)
-  if bright !=0:
-   bright=bright-1
-  else:
-   pass
-
-  SetPi(r2, bright2)
-  if bright2>50:
-   SetPi(b2, bright2)
-  else:
-   SetPi(b2, 50)
-   SetPi(g2, bright2)
-  time.sleep(fadetime2)
-
-  if bright2 !=0:
-   bright2=bright2-1
-  else:
-   pass
+    global bright
+    global brightnew
+    global brightnew2
+    global bright2
+    global fadetime
+    global fadetime2
+    MinBrightness = 13*maxBrightness
+    for flash_i in range(100):
+        start=random.randint(1,210)
+        if start==1:
+            brightnew=random.randint(MinBrightness,maxBrightness)
+            if bright==0:
+                fadetime=random.uniform(0.002,0.006) 
+            else:
+                pass
+        elif start==2:
+            brightnew2=random.randint(MinBrightness,maxBrightness)
+            if bright2==0:
+                fadetime2=random.uniform(0.002,0.006) 
+            else:
+                pass
+        else:
+            pass
+        if bright+brightnew<maxBrightness:
+            bright=bright+brightnew
+            brightnew=0
+        else:
+            pass  
+        if bright2+brightnew2<maxBrightness:
+            bright2=bright2+brightnew2
+            brightnew2=0
+        else:
+            pass  
+        SetPi(r1, bright)
+        if bright>50:
+            SetPi(b1, bright)
+        else:
+            SetPi(b1, 50)
+            SetPi(g1, bright)
+        time.sleep(fadetime)
+        if bright !=0:
+            bright=bright-1
+        else:
+            pass
+        SetPi(r2, bright2)
+        if bright2>50:
+            SetPi(b2, bright2)
+        else:
+            SetPi(b2, 50)
+            SetPi(g2, bright2)
+        time.sleep(fadetime2)
+        if bright2 !=0:
+            bright2=bright2-1
+        else:
+            pass
 
 def error_value():
- SetPi(r2, 100)
- time.sleep(1)
- SetPi(r1, 100)
- time.sleep(1)
- SetPi(r2, 0)
- time.sleep(1)
- SetPi(r1, 0)
- time.sleep(1)
+    SetPi(r2, 100)
+    time.sleep(1)
+    SetPi(r1, 100)
+    time.sleep(1)
+    SetPi(r2, 0)
+    time.sleep(1)
+    SetPi(r1, 0)
+    time.sleep(1)
 
 def writeOutput(text, filename):
- fh = open(filename,"w")
- fh.write(text)
- fh.close()
+    fh = open(filename,"w")
+    fh.write(text)
+    fh.close()
 
 def SetPi(pinValue, Amount):
- pi.set_PWM_dutycycle(pinValue, Amount)
- #print(str(pinValue) + " " + str(Amount))
+    pi.set_PWM_dutycycle(pinValue, Amount)
+    #print(str(pinValue) + " " + str(Amount))
 
 #this executes the main loop. E.g. it is looking for the conditions and decides for the animation that should be displayed:
 def main_loop():
- while 1:
-  CheckWeather()
+    while 1:
+        CheckWeather()
 
-  if  condition=="rainy":
-   rain()
-  elif condition=="cloudy":
-   cloud()
-  elif condition=="sunny":
-   sun()
-  elif condition=="snowy":
-   snow()
-  elif condition=="stormy":
-   flash()
-  else:
-   error_value()
-  time.sleep(0.2)
+        if  condition=="rainy":
+            rain()
+        elif condition=="cloudy":
+            cloud()
+        elif condition=="sunny":
+            sun()
+        elif condition=="snowy":
+            snow()
+        elif condition=="stormy":
+            flash()
+        else:
+            error_value()
+        time.sleep(0.2)
 
 #Start
 if __name__ == '__main__':
- try:
-   main_loop()
- except KeyboardInterrupt:
-  print(sys.stderr, '\nExiting by user request.\n')
-  sys.exit(0)
- except Exception as e:
-  if WebInterfaceActive:
-   writeOutput(str(e), WebInterfacePath + "error.log")
-  sys.exit(0)
+    try:
+        main_loop()
+    except KeyboardInterrupt:
+        print(sys.stderr, '\nExiting by user request.\n')
+        sys.exit(0)
+    except Exception as e:
+        if WebInterfaceActive:
+            writeOutput(str(e), WebInterfacePath + "error.log")
+        sys.exit(0)
